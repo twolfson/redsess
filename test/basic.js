@@ -38,7 +38,7 @@ tap.test('setup', function (t) {
       options.token = 'super-duper-custom-token'
       console.error('hai');
     }
-    req.session = res.session = new RedSess(req, res)
+    req.session = res.session = new RedSess(req, res, options)
     var session = new RedSess(req, res, {
       cookieOptions: {
         path: "/cookie"
@@ -123,7 +123,6 @@ tap.test('setup', function (t) {
       case '/token':
         return session.set('str', 'hai', function (er) {
           if (er) throw er
-          console.error(res.session.token)
           res.send(JSON.stringify(
             { id: res.session.id, ok: true }))
         })
@@ -356,8 +355,7 @@ tap.test('/token', function (t) {
           , json: true }, function (er, res, data) {
     if (er) throw er
     t.equal(res.statusCode, 200)
-    console.error('wat', id, data);
-    t.deepEqual(data, { id: id, ok: true })
+    t.deepEqual(data, { id: 'session:super-duper-custom-token', ok: true })
     t.equal(1, 2);
 
     t.end()
