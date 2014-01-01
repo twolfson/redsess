@@ -356,7 +356,6 @@ tap.test('/token', function (t) {
     if (er) throw er
     t.equal(res.statusCode, 200)
     t.deepEqual(data, { id: 'session:super-duper-custom-token', ok: true })
-    t.equal(1, 2);
 
     t.end()
   })
