@@ -119,6 +119,13 @@ tap.test('setup', function (t) {
           res.send()
         })
 
+      case '/token':
+        return session.set('str', 'hai', function (er) {
+          if (er) throw er
+          res.send(JSON.stringify(
+            { id: res.session.id, ok: true }))
+        })
+
       default:
         res.writeHead(404)
         res.end(JSON.stringify(
@@ -336,6 +343,20 @@ tap.test('/cookie', function (t) {
     var cookie = res.headers['set-cookie'][1]
 
     t.ok(cookie.indexOf("/cookie") > -1)
+
+    t.end()
+  })
+})
+
+tap.test('/token', function (t) {
+  request({ url: 'http://localhost:' + PORT + '/token'
+          , jar: request.jar()
+          , json: true }, function (er, res, data) {
+    if (er) throw er
+    t.equal(res.statusCode, 200)
+    console.error('wat', id, data);
+    t.deepEqual(data, { id: id, ok: true })
+    t.equal(1, 2);
 
     t.end()
   })
