@@ -52,6 +52,7 @@ function RedSess (req, res, opt) {
   }, cookieOptions)
 
   var s = this.cookies.get(name, copt)
+  console.error(s, opt.token)
   if (!s)
     s = opt.token || require('crypto').randomBytes(30).toString('base64')
 
