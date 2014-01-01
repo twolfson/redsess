@@ -36,7 +36,6 @@ tap.test('setup', function (t) {
     var options = {}
     if (req.url === '/token') {
       options.token = 'super-duper-custom-token'
-      console.error('hai');
     }
     req.session = res.session = new RedSess(req, res, options)
     var session = new RedSess(req, res, {
