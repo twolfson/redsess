@@ -33,18 +33,16 @@ tap.test('setup', function (t) {
   server = http.createServer(function (req, res) {
     console.error('SERVER', req.url)
     req.cookies = res.cookies = new Cookies(req, res)
+    var options = {}
+    if (req.url === '/token') {
+      options.token = 'super-duper-custom-token'
+    }
     req.session = res.session = new RedSess(req, res)
-    var options = {
+    var session = new RedSess(req, res, {
       cookieOptions: {
         path: "/cookie"
       }
-    }
-
-    if (req.url === '/token') {
-
-    }
-
-    var session = new RedSess(req, res, options)
+    })
 
     res.send = function (n) {
       res.writeHead(200)
